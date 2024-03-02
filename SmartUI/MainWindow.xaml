@@ -1,0 +1,59 @@
+﻿<Window x:Class="SmartUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SmartUI"
+        mc:Ignorable="d"
+        Title="Haruhi" Height="750" Width="998">
+    <Window.DataContext>
+        <local:MainWindowViewModel/>
+    </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding Key="Esc" Command="{Binding X}"/>
+    </Window.InputBindings>
+    <Window.Resources>
+        <SolidColorBrush Color="White" x:Key="BgColor"></SolidColorBrush>
+        <SolidColorBrush Color="Black" x:Key="TextColor"></SolidColorBrush>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="24"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <DockPanel>
+            <ToolBarPanel Background="{StaticResource BgColor}">
+                <ToolBar Background="{StaticResource BgColor}">
+                    <Button Foreground="{StaticResource TextColor}" Content="From MFC Id" Command="{Binding FromMFCIdCommand}"/>
+                    <Button Foreground="{StaticResource TextColor}" Content="View Detail"/>
+                    <Button Foreground="{StaticResource TextColor}" Content="New Item"/>
+                    <Button Foreground="{StaticResource TextColor}" Content="more images" Command="{Binding MoreImagesCommand}"/>
+                    <Button Foreground="{StaticResource TextColor}" Content="open more img folder" Command="{Binding OpenMoreImagesFolderCommand}"/>
+                    <Button Foreground="{StaticResource TextColor}" Content="img folder" Command="{Binding OpenImagesFolderCommand}"/>
+                </ToolBar>
+            </ToolBarPanel>
+        </DockPanel>
+
+        <ListView x:Name="listy" Background="{StaticResource BgColor}" BorderThickness="0" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                HorizontalContentAlignment="Stretch" Grid.Row="2" ItemsSource="{Binding CollectionView}" SelectedItem="{Binding SelectedFigure}">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <DockPanel Height="200" VerticalAlignment="Top">
+                        <DockPanel.InputBindings>
+                            <MouseBinding Gesture="LeftDoubleClick" Command="{Binding Path=DataContext.DoubleCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+                        </DockPanel.InputBindings>
+                        <Grid Width="195" Height="195">
+                            <Image VerticalAlignment="Top" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality" Stretch="UniformToFill" Source="{Binding Image}"/>
+                        </Grid>
+                    </DockPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </Grid>
+</Window>

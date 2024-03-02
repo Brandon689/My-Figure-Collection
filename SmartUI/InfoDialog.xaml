@@ -1,0 +1,56 @@
+﻿<Window x:Class="SmartUI.InfoDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SmartUI"
+        mc:Ignorable="d"
+        MouseDown="Window_MouseDown"
+        FontSize="14"
+        Topmost="True" Width="800" Height="380" AllowsTransparency="True" WindowStyle="None">
+    <Window.Background>
+        <SolidColorBrush Opacity="0.85" Color="White"/>
+    </Window.Background>
+    <!--<Window.DataContext>
+        <local:InfoViewModel/>
+    </Window.DataContext>-->
+    <Window.InputBindings>
+        <!--<KeyBinding Key="Esc" Command="{Binding X}" CommandParameter="{Binding ElementName=InfoDialog}"/>-->
+        <!--<MouseBinding Gesture="LeftDoubleClick" Command="{Binding X}" CommandParameter="{Binding ElementName=InfoDialog}"/>-->
+    </Window.InputBindings>
+    <Grid DataContext="{Binding Fig}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Image x:Name="portrait" VerticalAlignment="Top" HorizontalAlignment="Left" RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding Image}" Margin="0,0,10,0"/>
+        <Grid Grid.Column="1" HorizontalAlignment="Left">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+            </Grid.RowDefinitions>
+            <TextBlock TextWrapping="Wrap" Width="380" HorizontalAlignment="Left" Text="{Binding Name}"/>
+            <TextBlock Grid.Row="1" HorizontalAlignment="Left" Text="{Binding MFC.Character}"/>
+            <TextBlock Grid.Row="2" Text="{Binding MFC.Origin}"/>
+            <TextBlock Grid.Row="3" Text="{Binding MFC.Company}"/>
+            <TextBlock Grid.Row="4" Text="{Binding MFC.ReleaseDate}"/>
+            <TextBlock Grid.Row="5" Text="{Binding MFC.ScaleDimensions}"/>
+            <TextBlock Grid.Row="6" Text="{Binding MFC.Price}"/>
+            <TextBlock Grid.Row="7" Text="{Binding MFC.JCharacter}"/>
+            <TextBlock Grid.Row="8" Text="{Binding MFC.JCompany}"/>
+            <TextBlock Grid.Row="9" Text="{Binding MFC.JArtists}"/>
+            <TextBlock Grid.Row="10" Text="{Binding MFC.OwnedBy}"/>
+            <Button Grid.Row="11" x:Name="mfcIdButton" Background="Transparent" HorizontalAlignment="Left" BorderThickness="0" Click="Button_Click" Content="{Binding MFC.MFCId}"/>
+        </Grid>
+    </Grid>
+</Window>
