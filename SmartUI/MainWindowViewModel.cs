@@ -56,7 +56,7 @@ namespace SmartUI
                 {
                     Console.WriteLine(_selectedFigure.Name);
                     //return;
-                    await net.Image(_selectedFigure.MfcId);
+                    //await net.Image(_selectedFigure.MfcId);
                     HtmlParse html = new();
                     var itm = await html.Pars($"https://myfigurecollection.net/item/{_selectedFigure.MfcId}");
 
@@ -125,9 +125,13 @@ namespace SmartUI
                 {
                     bool success = int.TryParse(Clipboard.GetText(), out int id);
                     if (!success) { Console.WriteLine("enter a valid MFC id integer"); return; }
-                    await net.Image(id);
                     HtmlParse html = new();
                     var itm = await html.Pars($"https://myfigurecollection.net/item/{id}");
+                    var f = await html.MainImage(itm);
+
+                    string x = $"{Glob.Pic}{id}.jpg";
+
+                    await net.Image(f, x);
 
                     var it = await html.GetItem(itm);
                     var dir = Glob.MorePic + id + "\\";
@@ -167,6 +171,7 @@ namespace SmartUI
                     {
                         InfoDialogPtr.Close();
                     }
+                    oh = true;
                     InfoViewModel fm = new(SelectedFigure);
                     InfoDialogPtr = new(fm);
                     //InfoDialogPtr.DataContext = fm;
@@ -183,9 +188,18 @@ namespace SmartUI
                 {
                     Console.WriteLine("X");
                     InfoDialogPtr.Close();
+                    Oh();
                 });
             }
         }
+
+        private void Oh()
+        {
+            //oh = false;
+            InfoDialogPtr.Close();
+        }
+
+        bool oh = false;
 
         public void ChangedSelection()
         {
@@ -203,7 +217,7 @@ namespace SmartUI
                 _selectedFigure = value;
                 RaisePropertyChanged(nameof(SelectedFigure));
                 //if (oh) ChangedSelection();
-                 ChangedSelection();
+                if (oh) ChangedSelection();
             }
         }
 

@@ -37,6 +37,12 @@ namespace SmartUI
             return str;
         }
 
+        public async Task<string> MainImage(IHtmlDocument document)
+        {
+            var p = document.QuerySelector(".item-picture .main img");
+            return p.GetAttribute("src").Replace("items/1", "items/2");
+        }
+
         private async Task<List<string>> MangoImgSlideshow(IHtmlDocument document)
         {
             var g = document.QuerySelector(".item-picture");
@@ -85,12 +91,11 @@ namespace SmartUI
             var crumbs = idbar.Split("›");
             var id = crumbs.Last().Replace("Item #", "").Trim();
             //Console.WriteLine(id);
-            var table = document.QuerySelector(".data .form");
             MFCItem t = new();
             t.MFCId = int.Parse(id);
 
-            var community = document.QuerySelector(".data_2 .form");
-            var communrows = community.QuerySelectorAll(".form-field");
+            var community = document.QuerySelector(".data-wrapper .data.col");
+            var communrows = community.QuerySelectorAll(".data-field");
             for (int i = 0; i < communrows.Length; i++)
             {
                 var sk = communrows[i].TextContent;
@@ -168,7 +173,8 @@ namespace SmartUI
                     t.TimesRated = int.Parse(tim);
                 }
             }
-            var cells = table.QuerySelectorAll(".form-field");
+            var table = document.QuerySelector(".data.row");
+            var cells = table.QuerySelectorAll(".data-field");
 
             var stats = document.QuerySelector(".object-stats");
 
@@ -179,13 +185,13 @@ namespace SmartUI
             var zzrot = kk[3].Replace("likes", "").Replace("like", "").Replace(",", "").Trim();
             t.Likes = int.Parse(zzrot);
 
-            var title = document.QuerySelector(".h1-headline-value .headline");
+            var title = document.QuerySelector(".title");
             t.Title = title.TextContent;
             //t.ObjectStats = stats.TextContent.Replace("\u2022", "").Replace("Japanese", "").Trim();
             foreach (var item in cells)
             {
-                var inner = item.QuerySelector(".form-label");
-                var inner2 = item.QuerySelector(".form-input");
+                var inner = item.QuerySelector(".data-label");
+                var inner2 = item.QuerySelector(".data-value");
                 if (inner != null)
                 {
                     var label = inner.TextContent.Trim();

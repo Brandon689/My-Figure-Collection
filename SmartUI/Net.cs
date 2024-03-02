@@ -7,16 +7,27 @@ namespace SmartUI
     public class Net
     {
         private HttpClient client = new();
-        public async Task<string> Image(int mfcid)
+
+        public async Task<string> Image(string pic, string path)
         {
-            string fo = $"https://static.myfigurecollection.net/upload/items/large/{mfcid}.jpg";
-            string x = $"{Glob.Pic}{mfcid}.jpg";
-            if (!File.Exists(x))
+            //string x = $"{Glob.Pic}{mfcid}.jpg";
+
+            if (!File.Exists(pic))
             {
-                await HttpGetForLargeFileInRightWay(fo, x);
+                await HttpGetForLargeFileInRightWay(pic, path);
             }
-            return x;
+            return path;
         }
+        //public async Task<string> Image(int mfcid)
+        //{
+        //    string fo = $"https://static.myfigurecollection.net/upload/items/large/{mfcid}.jpg";
+        //    string x = $"{Glob.Pic}{mfcid}.jpg";
+        //    if (!File.Exists(x))
+        //    {
+        //        await HttpGetForLargeFileInRightWay(fo, x);
+        //    }
+        //    return x;
+        //}
 
         public async Task HttpGetForLargeFileInRightWay(string uri, string path)
         {
